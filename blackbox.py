@@ -242,15 +242,16 @@ class Artifact_Collector:
 		    pass
 
 	if arti_num == 0:
-	    self.args['logger'].info(data["name"]+" has no artifact")
+	    self.args['logger'].info(data["name"]+"/False")
 	    shutil.rmtree(log_dir, ignore_errors=False, onerror=None)
 	else:
+	    self.args['logger'].info(data['name']+'/True')
             self.write_readme(log_dir, data["doc"])
                 
     def leave_command_log(self, data):
         comm = data["sources"][0]["attributes"]["cmd"]
 	if not os.path.isfile(comm):
-	    self.args['logger'].info(data['name'] + " cannot executed")
+	    self.args['logger'].info(data['name'] + "/False")
 	    return
 
         file_name = self.log_root_dir+data["name"]
@@ -262,6 +263,7 @@ class Artifact_Collector:
             comm = comm + " " + arg
 
         os.system(comm + " > " + file_name)
+	self.args['logger'].info(data['name']+'/True')
 
     def compress_data(self, directory):
         root_save_dir = os.path.join(setting['root_storage_dir'],str(datetime.date.today()))

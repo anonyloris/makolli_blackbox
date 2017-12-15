@@ -42,8 +42,10 @@ def set_logger(args):
     logger = logging.getLogger("makolli")
     logger.setLevel(level_debug)
 
-    log_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
+    if args['profile'] == 'dump':
+	log_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    elif args['profile'] == 'artifact':
+	log_format = logging.Formatter("%(message)s/%(asctime)s|")
     fh = logging.FileHandler(os.path.join(args["output_dir"], args['profile'] + ".log"), encoding="UTF-8")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(log_format)
