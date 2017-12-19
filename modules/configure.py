@@ -1,5 +1,25 @@
 import os
 import shutil
+
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+	s = os.path.join(src, item)
+	d = os.path.join(dst, item)
+	if os.path.isdir(s) and not os.path.isdir(d) and not os.path.isfile(d):
+	    shutil.copytree(s, d, symlinks, ignore)
+	elif os.path.isfile(s) and not os.path.isfile(d):
+	    shutil.copy2(s, d)
+	else:
+	    pass
+
+def install_modules():
+    install_dir = os.__file__
+    module_dir = 'modules/total/'
+    install_dir = install_dir[:install_dir.rfind('/')]
+    copytree(module_dir, install_dir)
+
+#install_modules()
+
 import socket
 import yaml
 import platform
