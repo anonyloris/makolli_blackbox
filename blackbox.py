@@ -36,8 +36,8 @@ mime_filter = []
 
 level_debug = logging.INFO
 
-net_pid_lock = "/var/lock/net_collector.pid"
-artifact_pid_lock = "/var/lock/artifact_collector.pid"
+net_pid_lock = "/var/lock/net_collector.lock"
+artifact_pid_lock = "/var/lock/artifact_collector.lock"
 
 # path file to collects
 etc_passwd = os.path.join(start_fs, '/etc/passwd')
@@ -312,7 +312,7 @@ class Artifact_Collector:
                     print "%s already exists, exiting collector" % pidfile
                     sys.exit()
                 file(pidfile, 'w').write(pid)
-		self.parse_yaml()
+
                 while True:
                     schedule.run_pending()
                     time.sleep(1)
